@@ -9,7 +9,7 @@ public class Projeto {
     private String objetivo;
     private String descricao;
     private String status;
-    private ArrayList<Colaborador> listaParticipantes = new ArrayList<>();
+    private ArrayList<Colaborador> listaParticipantes = new ArrayList<>(); //lista dos participantes do projeto
 
     public ArrayList<Colaborador> getListaParticipantes() {
         return listaParticipantes;
@@ -86,8 +86,16 @@ public class Projeto {
         this.status = status;
     }
 
+    public void adicionarColaborador(Colaborador colab){
+        listaParticipantes.add(colab);
+    }
+
     public String imprimir() {
-        return "Título do Projeto: " + titulo + "\nStatus: " + status;
+        String saida = "";
+        for(Colaborador colab : listaParticipantes){
+            saida += "\n" + colab.getNome() + "\n";
+        }
+        return "Título do Projeto: " + titulo + "\nStatus: " + status + "\nParticipantes: " + saida;
     }
 }
 

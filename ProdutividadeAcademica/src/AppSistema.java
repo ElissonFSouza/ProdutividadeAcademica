@@ -52,14 +52,18 @@ public class AppSistema {
 
                     System.out.println("\nProjeto criado com sucesso.");
                     System.out.println(proj.imprimir());
-
                     break;
 
                 case 2:     //2 - Buscar projeto
-                    System.out.println("\nDigite o título do projeto a ser buscado: ");
+                    System.out.println("\nDigite o título do projeto a ser buscado:");
                     tituloProj = entradaString.nextLine();
 
-                    System.out.println("\n" + Laboratorio.pesquisarProjeto(tituloProj));
+                    if (Laboratorio.verificarProjeto(tituloProj)) {
+                        System.out.println(Laboratorio.pesquisarProjeto(tituloProj));
+                    } else {
+                        System.out.println("\nProjeto não encontrado.");
+                        break;
+                    }
 
                     do {
                         exibirMenu2();
@@ -67,80 +71,96 @@ public class AppSistema {
 
                         switch (menu) {
                             case 1:     //1 - Alocar participantes
-                                System.out.println("\nDigite o nome do colaborador:");
-                                nome = entradaString.nextLine();
+                                do {
+                                    System.out.println("\nDigite o nome do colaborador:");
+                                    nome = entradaString.nextLine();
 
-                                System.out.println("\n" + Laboratorio.pesquisarColaborador(nome));
+                                    if (Laboratorio.verificarColaborador(nome)) {
+                                        menu = 1;
+                                    } else {
+                                        menu = 0;
+                                    }
+                                } while (menu != 1);
 
-
+                                if (Laboratorio.associar(tituloProj, nome)) {
+                                    System.out.println("\nColaborador alocado com sucesso.");
+                                } else {
+                                    System.out.println("\nInsucesso na alocação.");
+                                }
+                                break;
 
                             default:
                                 System.out.println("\nOpção inválida.");
                         }
                     } while (menu != 7);
-
                     break;
 
                 case 3:     //3 - Cadastrar colaborador
-                    do {
-                        exibirMenu3();
-                        menu = entrada.nextInt();
+                    exibirMenu3();
+                    menu = entrada.nextInt();
 
-                        System.out.println("\n====== Cadastrar Colaborador ======");
-                        System.out.println("Digite o nome:");
+                    System.out.println("\n====== Cadastrar Colaborador ======");
+                    System.out.println("Digite o nome:");
 
-                        switch (menu) {
+                    switch (menu) {
 
-                            case 1:
-                                nome = entradaString.nextLine();
-                                ocupacao = "Aluno";
+                        case 1:
+                            nome = entradaString.nextLine();
+                            ocupacao = "Aluno";
 
-                                colab = new Colaborador(nome, ocupacao);
+                            colab = new Colaborador(nome, ocupacao);
 
-                                Laboratorio.adicionarColaborador(colab);
+                            Laboratorio.adicionarColaborador(colab);
+                            break;
 
-                            case 2:
-                                nome = entradaString.nextLine();
-                                ocupacao = "Professor";
+                        case 2:
+                            nome = entradaString.nextLine();
+                            ocupacao = "Professor";
 
-                                colab = new Colaborador(nome, ocupacao);
+                            colab = new Colaborador(nome, ocupacao);
 
-                                Laboratorio.adicionarColaborador(colab);
+                            Laboratorio.adicionarColaborador(colab);
+                            break;
 
-                            case 3:
-                                nome = entradaString.nextLine();
-                                ocupacao = "Pesquisador";
+                        case 3:
+                            nome = entradaString.nextLine();
+                            ocupacao = "Pesquisador";
 
-                                colab = new Colaborador(nome, ocupacao);
+                            colab = new Colaborador(nome, ocupacao);
 
-                                Laboratorio.adicionarColaborador(colab);
+                            Laboratorio.adicionarColaborador(colab);
+                            break;
 
-                            default:
-                                System.out.println("\nOpção inválida.");
-                        }
-                    } while (menu != 4);
+                        default:
+                            System.out.println("\nOpção inválida.");
+                    }
+
+                    System.out.println("\nColaborador cadastrado com sucesso.");
+                    break;
+
+                case 4:
+                    System.out.println("\nSistema encerrado.");
+                    break;
 
                 default:
                     System.out.println("\nOpção inválida.");
             }
-
-
         } while (menu != 4);
 
     }
 
     static void exibirMenu() {
         System.out.println("\n====== LABORATÓRIO ======");
-        System.out.println("1 - Criar projeto");
+        System.out.println("1 - Criar projeto"); // Done
         System.out.println("2 - Buscar projeto");
-        System.out.println("3 - Cadastrar colaborador");
+        System.out.println("3 - Cadastrar colaborador"); // Done
         System.out.println("4 - Sair");
         System.out.print("=====> Escolha uma opção: ");
     }
 
     static void exibirMenu2() {
-        System.out.println("\n====== OPÇÕES ======");
-        System.out.println("1 - Alocar participantes");
+        System.out.println("\n====== OPÇÕES DO PROJETO ======");
+        System.out.println("1 - Alocar participante");
         System.out.println("2 - ");
         System.out.println("3 - ");
         System.out.println("4 - ");
