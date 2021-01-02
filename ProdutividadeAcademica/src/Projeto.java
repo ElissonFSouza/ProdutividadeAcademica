@@ -86,16 +86,43 @@ public class Projeto {
         this.status = status;
     }
 
-    public void adicionarColaborador(Colaborador colab){
+    public void adicionarParticipante(Colaborador colab){
         listaParticipantes.add(colab);
     }
 
-    public String imprimir() {
-        String saida = "";
+    public boolean verificarProfessor() { // verifica se existe algum professor entre os participantes
         for(Colaborador colab : listaParticipantes){
-            saida += "\n" + colab.getNome() + "\n";
+            if(colab.getOcupacao().equals("Professor")){
+                return true;
+            }
         }
-        return "Título do Projeto: " + titulo + "\nStatus: " + status + "\nParticipantes: " + saida;
+        return false;
+    }
+
+    public boolean verificarSituacaoAluno() {
+        int qtd = 0;
+        for(Colaborador colab : listaParticipantes){
+            if (!colab.verificarSituacao()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String imprimir() {
+        String participantes = "";
+        if (getListaParticipantes().isEmpty()) {
+            participantes = " Não há colaboradores alocados ao projeto.";
+        } else {
+            for(Colaborador colab : listaParticipantes){
+                participantes += "\n" + colab.getNome() + " (" + colab.getOcupacao() + ")";
+            }
+        }
+
+        return "Título do Projeto: " + titulo + "\nData de início: " + dataInicio
+                + "\nData de término: " + dataFim + "\nAgência financiadora: " + agenciaFinanciadora + "\nValor financiado: "
+                + String.format("R$ %.2f", valorFinanciado) + "\nObjetivo: " + objetivo + "\nDescrição: " + descricao
+                + "\nStatus: " + status + "\nParticipantes:" + participantes;
     }
 }
 
