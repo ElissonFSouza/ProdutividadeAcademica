@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Laboratorio {
-    private static ArrayList<Projeto> listaProjetos = new ArrayList<>();
-    private static ArrayList<Publicacao> listaPublicacoes = new ArrayList<>();
-    private static ArrayList<Colaborador> listaColaboradores = new ArrayList<>();
+    private static final ArrayList<Projeto> listaProjetos = new ArrayList<>();
+    private static final ArrayList<Publicacao> listaPublicacoes = new ArrayList<>();
+    private static final ArrayList<Colaborador> listaColaboradores = new ArrayList<>();
 
     public static ArrayList<Projeto> getListaProjetos() {
         return listaProjetos;
@@ -29,7 +29,7 @@ public class Laboratorio {
         listaColaboradores.add(colab);
     }
 
-    public static String listarProjetos() { //Imprime os dados de todos os projetos cadastrados
+    /*public static String listarProjetos() { //Imprime os dados de todos os projetos cadastrados
         String saida = "";
         int i = 1;
         for(Projeto proj : listaProjetos){
@@ -37,6 +37,36 @@ public class Laboratorio {
             saida += proj.imprimir();
         }
         return saida;
+    }*/
+
+    public static int qtdProjetosElaboracao() { //Retorna a quantidade de projetos em elaboração
+        int qtd = 0;
+        for(Projeto proj : listaProjetos) {
+            if (proj.getStatus().equals("Em elaboração")) {
+                qtd++;
+            }
+        }
+        return qtd;
+    }
+
+    public static int qtdProjetosAndamento() { //Retorna a quantidade de projetos em andamento
+        int qtd = 0;
+        for(Projeto proj : listaProjetos) {
+            if (proj.getStatus().equals("Em andamento")) {
+                qtd++;
+            }
+        }
+        return qtd;
+    }
+
+    public static int qtdProjetosConcluidos() { //Retorna a quantidade de projetos concluídos
+        int qtd = 0;
+        for(Projeto proj : listaProjetos) {
+            if (proj.getStatus().equals("Concluído")) {
+                qtd++;
+            }
+        }
+        return qtd;
     }
 
     public static boolean verificarSituacaoAluno(String titulo) {
@@ -48,7 +78,7 @@ public class Laboratorio {
         return false;
     }
 
-    public static boolean verificarProfessor(String titulo) { //Verifica se existe pelo menos 1 professor alocado ao projeto
+    public static boolean verificarProfessorProj(String titulo) { //Verifica se existe pelo menos 1 professor alocado ao projeto
         for (Projeto proj : listaProjetos) {
             if (proj.getTitulo().equalsIgnoreCase(titulo)) {
                 return proj.verificarProfessor();
@@ -57,12 +87,10 @@ public class Laboratorio {
         return false;
     }
 
-    public static boolean verificarDados(String titulo) { //Verifica se todos os dados do projeto foram inseridos
+    public static boolean verificarDadosProj(String titulo) { //Verifica se todos os dados do projeto foram inseridos
         for (Projeto proj : listaProjetos) {
             if (proj.getTitulo().equalsIgnoreCase(titulo)) {
-                if (proj.getDataInicio() != null && !proj.getDataInicio().isEmpty()
-                        && proj.getDataFim() != null && !proj.getDataFim().isEmpty()
-                        && proj.getAgenciaFinanciadora() != null && !proj.getAgenciaFinanciadora().isEmpty()
+                if (proj.getAgenciaFinanciadora() != null && !proj.getAgenciaFinanciadora().isEmpty()
                         && proj.getObjetivo() != null && !proj.getObjetivo().isEmpty()
                         && proj.getDescricao() != null && !proj.getDescricao().isEmpty()) {
                     return true;
@@ -74,7 +102,7 @@ public class Laboratorio {
         return false;
     }
 
-    public static boolean verificarStatus(String titulo) { //Verifica se o status do projeto é "Em elaboração".
+    public static boolean verificarStatusProj(String titulo) { //Verifica se o status do projeto é "Em elaboração".
         for(Projeto proj : listaProjetos) {
             if (proj.getTitulo().equalsIgnoreCase(titulo)) {
                 return proj.getStatus().equals("Em elaboração");
@@ -119,7 +147,25 @@ public class Laboratorio {
         return "\nColaborador não encontrado.\n";
     }
 
-    public static void associar(String titulo, String nome){ //Cadastra o colaborador na lista de participantes do projeto
+    public static boolean verificarPublicaao(String titulo) { //Verifica se existe uma publicação com o título digitado e retorna True ou False
+        for(Publicacao pub : listaPublicacoes) {
+            if (pub.getTitulo().equalsIgnoreCase(titulo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String pesquisarPublicacao(String titulo) { //Verifica se existe uma publicação com o nome digitado e, caso exista, retorna uma String com os dados
+        for(Publicacao pub : listaPublicacoes) {
+            if (pub.getTitulo().equalsIgnoreCase(titulo)) {
+                return "\nPublicação encontrada.\n" + pub.imprimir();
+            }
+        }
+        return "\nPublicação não encontrada.\n";
+    }
+
+    public static void associarProj(String titulo, String nome){ //Cadastra o colaborador na lista de participantes do projeto
         Colaborador colab2 = null;                           //e inclui o projeto na lista de projetos em que o colaborador participa
         for(Colaborador colab : listaColaboradores) {
             if (colab.getNome().equalsIgnoreCase(nome)) {
@@ -138,7 +184,27 @@ public class Laboratorio {
             colab2.adicionarProjeto(proj2);
             proj2.adicionarParticipante(colab2);
         }
+    }
 
+    public static void associarPub(String titulo, String nome){ //Cadastra o colaborador na lista de autores da publicação
+        Colaborador colab2 = null;                              //e inclui a publicação na lista de publicações do colaborador
+        for(Colaborador colab : listaColaboradores) {
+            if (colab.getNome().equalsIgnoreCase(nome)) {
+                colab2 = colab;
+                break;
+            }
+        }
+        Publicacao pub2 = null;
+        for(Publicacao pub : listaPublicacoes){
+            if (pub.getTitulo().equalsIgnoreCase(titulo)){
+                pub2 = pub;
+                break;
+            }
+        }
+        if (colab2 != null && pub2 != null) {
+            colab2.adicionarPublicacao(pub2);
+            pub2.adicionarAutor(colab2);
+        }
     }
 
     public static void alterarStatus(String titulo) {

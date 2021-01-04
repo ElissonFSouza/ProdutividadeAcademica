@@ -1,9 +1,12 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Projeto {
     private String titulo;
-    private String dataInicio;
-    private String dataFim;
+    private Date dataInicio;
+    private Date dataFim;
     private String agenciaFinanciadora;
     private float valorFinanciado;
     private String objetivo;
@@ -11,13 +14,15 @@ public class Projeto {
     private String status;
     private ArrayList<Colaborador> listaParticipantes = new ArrayList<>(); //lista dos participantes do projeto
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
     public ArrayList<Colaborador> getListaParticipantes() {
         return listaParticipantes;
     }
 
     public Projeto(){}
 
-    public Projeto(String titulo, String dataInicio, String dataFim,
+    public Projeto(String titulo, Date dataInicio, Date dataFim,
                    String agenciaFinanciadora, float valorFinanciado,
                    String objetivo, String descricao, String status) {
         this.titulo = titulo;
@@ -37,17 +42,17 @@ public class Projeto {
         this.titulo = titulo;
     }
 
-    public String getDataInicio() {
+    public Date getDataInicio() {
         return dataInicio;
     }
-    public void setDataInicio(String dataInicio) {
+    public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public String getDataFim() {
+    public Date getDataFim() {
         return dataFim;
     }
-    public void setDataFim(String dataFim) {
+    public void setDataFim(Date dataFim) {
         this.dataFim = dataFim;
     }
 
@@ -119,8 +124,8 @@ public class Projeto {
             }
         }
 
-        return "Título do Projeto: " + titulo + "\nData de início: " + dataInicio
-                + "\nData de término: " + dataFim + "\nAgência financiadora: " + agenciaFinanciadora + "\nValor financiado: "
+        return "Título do projeto: " + titulo + "\nData de início: " + sdf.format(dataInicio)
+                + "\nData de término: " + sdf.format(dataFim) + "\nAgência financiadora: " + agenciaFinanciadora + "\nValor financiado: "
                 + String.format("R$ %.2f", valorFinanciado) + "\nObjetivo: " + objetivo + "\nDescrição: " + descricao
                 + "\nStatus: " + status + "\nParticipantes:" + participantes;
     }

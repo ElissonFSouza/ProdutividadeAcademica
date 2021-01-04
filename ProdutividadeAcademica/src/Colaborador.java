@@ -5,9 +5,14 @@ public class Colaborador {
     private String ocupacao;
     private String email;
     private ArrayList<Projeto> listaMeusProjetos = new ArrayList<>(); //lista dos projetos do colaborador
+    private ArrayList<Publicacao> listaMinhasPublicacoes = new ArrayList<>(); //lista das publicações do colaborador
 
     public ArrayList<Projeto> getListaMeusProjetos() {
         return listaMeusProjetos;
+    }
+
+    public ArrayList<Publicacao> getListaMinhasPublicacoes() {
+        return listaMinhasPublicacoes;
     }
 
     public Colaborador() {}
@@ -43,6 +48,10 @@ public class Colaborador {
         listaMeusProjetos.add(proj);
     }
 
+    public void adicionarPublicacao(Publicacao pub){
+        listaMinhasPublicacoes.add(pub);
+    }
+
     public boolean verificarSituacao() {
         int qtd = 0;
         for(Projeto proj : listaMeusProjetos){
@@ -54,16 +63,25 @@ public class Colaborador {
     }
 
     public String imprimir() {
-        String projetos = "";
+        String publicacoes = "";
+        if (getListaMinhasPublicacoes().isEmpty()) {
+            publicacoes = " Este colaborador não participa de nenhum projeto.";
+        } else {
+            for(Publicacao pub : listaMinhasPublicacoes){
+                publicacoes += "\n" + pub.getTitulo();
+            }
+        }
 
+        String projetos = "";
         if (getListaMeusProjetos().isEmpty()) {
-            projetos = "Este colaborador não participa de nenhum projeto.";
+            projetos = " Este colaborador não participa de nenhum projeto.";
         } else {
             for(Projeto proj : listaMeusProjetos){
                 projetos += "\n" + proj.getTitulo() + " (" + proj.getStatus() + ")";
             }
         }
 
-        return "Nome: " + nome + "\nEmail: " + email + "\nOcupação: " + ocupacao + "\nProjetos em que participa:" + projetos;
+        return "Nome: " + nome + "\nEmail: " + email + "\nOcupação: " + ocupacao
+                + "\nProjetos em que participa:" + projetos + "\nPublicações:" + publicacoes;
     }
 }

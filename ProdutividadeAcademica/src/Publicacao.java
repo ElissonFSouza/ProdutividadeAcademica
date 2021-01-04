@@ -1,16 +1,21 @@
+import java.util.ArrayList;
+
 public class Publicacao {
     private String titulo;
     private String conferencia;
-    private int ano;
-    private String projetoAssociado;
+    private int anoPublic;
+    private ArrayList<Colaborador> listaAutores = new ArrayList<>();
+
+    public ArrayList<Colaborador> getListaAutores() {
+        return listaAutores;
+    }
 
     public Publicacao() {}
 
-    public Publicacao(String titulo, String conferencia, int ano, String projetoAssociado) {
+    public Publicacao(String titulo, String conferencia, int anoPublic) {
         this.titulo = titulo;
         this.conferencia = conferencia;
-        this.ano = ano;
-        this.projetoAssociado = projetoAssociado;
+        this.anoPublic = anoPublic;
     }
 
     public String getTitulo() {
@@ -27,17 +32,28 @@ public class Publicacao {
         this.conferencia = conferencia;
     }
 
-    public int getAno() {
-        return ano;
+    public int getAnoPublic() {
+        return anoPublic;
     }
-    public void setAno(int ano) {
-        this.ano = ano;
+    public void setAnoPublic(int anoPublic) {
+        this.anoPublic = anoPublic;
     }
 
-    public String getProjetoAssociado() {
-        return projetoAssociado;
+    public void adicionarAutor(Colaborador colab){
+        listaAutores.add(colab);
     }
-    public void setProjetoAssociado(String projetoAssociado) {
-        this.projetoAssociado = projetoAssociado;
+
+    public String imprimir() {
+        String autores = "";
+        if (getListaAutores().isEmpty()) {
+            autores = " Não há autores associados à publicação.";
+        } else {
+            for(Colaborador colab : listaAutores){
+                autores += "\n" + colab.getNome() + " (" + colab.getOcupacao() + ")";
+            }
+        }
+
+        return "Título da publicação: " + titulo + "\nConferência onde foi publicada: "
+                + conferencia + "\nAno de publicação: " + anoPublic + autores;
     }
 }

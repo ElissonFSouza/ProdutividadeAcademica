@@ -5,8 +5,8 @@ public class Professor extends Colaborador{
         super();
     }
 
-    public Professor(String nome, String ocupacao, String orientacoes) {
-        super(nome, ocupacao);
+    public Professor(String nome, String email, String ocupacao, String orientacoes) {
+        super(nome, email, ocupacao);
         this.orientacoes = orientacoes;
     }
 
