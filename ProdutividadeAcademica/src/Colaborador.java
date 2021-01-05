@@ -65,7 +65,7 @@ public class Colaborador {
     public String imprimir() {
         String publicacoes = "";
         if (getListaMinhasPublicacoes().isEmpty()) {
-            publicacoes = " Este colaborador não participa de nenhum projeto.";
+            publicacoes = " Este colaborador não é autor de nenhuma publicação.";
         } else {
             for(Publicacao pub : listaMinhasPublicacoes){
                 publicacoes += "\n" + pub.getTitulo();
@@ -81,7 +81,7 @@ public class Colaborador {
             }
         }
 
-        return "Nome: " + nome + "\nEmail: " + email + "\nOcupação: " + ocupacao
-                + "\nProjetos em que participa:" + projetos + "\nPublicações:" + publicacoes;
+        return "- Nome: " + nome + "\n- Email: " + email + "\n- Ocupação: " + ocupacao
+                + "\n- Projetos em que participa:" + projetos + "\n- Publicações:" + publicacoes;
     }
 }

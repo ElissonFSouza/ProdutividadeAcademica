@@ -102,10 +102,10 @@ public class Laboratorio {
         return false;
     }
 
-    public static boolean verificarStatusProj(String titulo) { //Verifica se o status do projeto é "Em elaboração".
+    public static boolean verificarStatusProj(String titulo, String status) {     //Verifica se o status do projeto é igual ao status passado como parâmetro.
         for(Projeto proj : listaProjetos) {
             if (proj.getTitulo().equalsIgnoreCase(titulo)) {
-                return proj.getStatus().equals("Em elaboração");
+                return proj.getStatus().equals(status);
             }
         }
         return false;
@@ -165,8 +165,8 @@ public class Laboratorio {
         return "\nPublicação não encontrada.\n";
     }
 
-    public static void associarProj(String titulo, String nome){ //Cadastra o colaborador na lista de participantes do projeto
-        Colaborador colab2 = null;                           //e inclui o projeto na lista de projetos em que o colaborador participa
+    public static void associarColabProj(String titulo, String nome) { //Cadastra o colaborador na lista de participantes do projeto
+        Colaborador colab2 = null;                                     //e inclui o projeto na lista de projetos em que o colaborador participa
         for(Colaborador colab : listaColaboradores) {
             if (colab.getNome().equalsIgnoreCase(nome)) {
                 colab2 = colab;
@@ -186,8 +186,8 @@ public class Laboratorio {
         }
     }
 
-    public static void associarPub(String titulo, String nome){ //Cadastra o colaborador na lista de autores da publicação
-        Colaborador colab2 = null;                              //e inclui a publicação na lista de publicações do colaborador
+    public static void associarColabPub(String titulo, String nome) { //Cadastra o colaborador na lista de autores da publicação
+        Colaborador colab2 = null;                                    //e inclui a publicação na lista de publicações do colaborador
         for(Colaborador colab : listaColaboradores) {
             if (colab.getNome().equalsIgnoreCase(nome)) {
                 colab2 = colab;
@@ -204,6 +204,27 @@ public class Laboratorio {
         if (colab2 != null && pub2 != null) {
             colab2.adicionarPublicacao(pub2);
             pub2.adicionarAutor(colab2);
+        }
+    }
+
+    public static void associarPubProj(String tituloProj, String tituloPub) { //Inclui a publicação na lista de publicações do projeto
+        Publicacao pub2 = null;                                               //e inclui o projeto na lista de projetos da publicação
+        for(Publicacao pub : listaPublicacoes) {
+            if (pub.getTitulo().equalsIgnoreCase(tituloPub)) {
+                pub2 = pub;
+                break;
+            }
+        }
+        Projeto proj2 = null;
+        for(Projeto proj : listaProjetos){
+            if (proj.getTitulo().equalsIgnoreCase(tituloProj)) {
+                proj2 = proj;
+                break;
+            }
+        }
+        if (pub2 != null && proj2 != null) {
+            pub2.adicionarProjeto(proj2);
+            proj2.adicionarPublicacao(pub2);
         }
     }
 

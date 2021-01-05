@@ -5,9 +5,14 @@ public class Publicacao {
     private String conferencia;
     private int anoPublic;
     private ArrayList<Colaborador> listaAutores = new ArrayList<>();
+    private ArrayList<Projeto> listaProjetosAssociados = new ArrayList<>();
 
     public ArrayList<Colaborador> getListaAutores() {
         return listaAutores;
+    }
+
+    public ArrayList<Projeto> getListaProjetosAssociados() {
+        return listaProjetosAssociados;
     }
 
     public Publicacao() {}
@@ -43,6 +48,10 @@ public class Publicacao {
         listaAutores.add(colab);
     }
 
+    public void adicionarProjeto(Projeto proj) {
+        listaProjetosAssociados.add(proj);
+    }
+
     public String imprimir() {
         String autores = "";
         if (getListaAutores().isEmpty()) {
@@ -53,7 +62,17 @@ public class Publicacao {
             }
         }
 
-        return "Título da publicação: " + titulo + "\nConferência onde foi publicada: "
-                + conferencia + "\nAno de publicação: " + anoPublic + autores;
+        String projetos = "";
+        if (getListaProjetosAssociados().isEmpty()) {
+            projetos = " Não há projetos associados à publicação.";
+        } else {
+            for(Projeto proj : listaProjetosAssociados){
+                projetos += "\n" + proj.getTitulo() + " (" + proj.getStatus() + ")";
+            }
+        }
+
+        return "- Título da publicação: " + titulo + "\n- Conferência onde foi publicada: "
+                + conferencia + "\n- Ano de publicação: " + anoPublic + "\n- Autores:" + autores
+                + "\n- Projetos associados:" + projetos;
     }
 }

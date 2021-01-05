@@ -82,6 +82,7 @@ public class AppSistema {
 
                     System.out.println("\nProjeto adicionado com sucesso.");
                     System.out.println(proj.imprimir());
+                    System.out.println("\nConsulte o projeto através do menu principal para acessar opções adicionais.");
                     break;
 
                 case 2:     //2 - Consultar projeto
@@ -102,21 +103,26 @@ public class AppSistema {
 
                             switch (menu) {
                                 case 1:     //1 - Alocar participantes
-                                    if (Laboratorio.verificarStatusProj(tituloProj)) {     //Verifica se o status do projeto é "Em elaboração"
+                                    if (Laboratorio.verificarStatusProj(tituloProj, "Em elaboração")) {     //Verifica se o status do projeto é "Em elaboração"
                                         do {
                                             System.out.println("\nDigite o nome do colaborador:");
                                             nomeColab = entradaString.nextLine();
 
                                             if (Laboratorio.verificarColaborador(nomeColab)) {
-                                                Laboratorio.associarProj(tituloProj, nomeColab);
+                                                Laboratorio.associarColabProj(tituloProj, nomeColab);
                                                 System.out.println("\nColaborador alocado com sucesso.");
                                                 break;
                                             } else {
                                                 System.out.println("\nColaborador não encontrado.\nCadastre o colaborador no sistema antes de alocá-lo a um projeto.\n");
-                                                System.out.println("1 - Tentar novamente");
-                                                System.out.println("2 - Voltar");
-                                                System.out.print("=====> Escolha uma opção: ");
-                                                menu = entrada.nextInt();
+                                                do {
+                                                    System.out.println("1 - Tentar novamente");
+                                                    System.out.println("2 - Voltar");
+                                                    System.out.print("=====> Escolha uma opção: ");
+                                                    menu = entrada.nextInt();
+                                                    if (menu != 1 & menu != 2) {
+                                                        System.out.println("\nOpção inválida.\n");
+                                                    }
+                                                } while (menu != 1 & menu != 2);
                                             }
                                         } while (menu != 2);
                                     } else {
@@ -129,7 +135,7 @@ public class AppSistema {
                                         System.out.println("\nO projeto não pode ser iniciado.\nDeve existir pelo menos 1 professor alocado ao projeto.");
                                     } else if (!Laboratorio.verificarDadosProj(tituloProj)) {
                                         System.out.println("\nO projeto não pode ser iniciado.\nPreencha todos os dados para poder iniciar.");
-                                    } else if (!Laboratorio.verificarStatusProj(tituloProj)) {
+                                    } else if (!Laboratorio.verificarStatusProj(tituloProj, "Em elaboração")) {
                                         System.out.println("\nO projeto já foi iniciado anteriormente.");
                                     } else if (!Laboratorio.verificarSituacaoAluno(tituloProj)) {
                                         System.out.println("\nO projeto não pode ser iniciado. Um aluno não pode participar de mais de 2 projetos em andamento.");
@@ -157,8 +163,33 @@ public class AppSistema {
                         menu = entrada.nextInt();
                         switch (menu) {
                             case 1:
-                                cadastrarColaborador("Aluno");
-                                menu = 4;
+                                do {
+                                    System.out.println("Que tipo de aluno?");
+                                    System.out.println("1 - Aluno de graduação");
+                                    System.out.println("2 - Aluno de mestrado");
+                                    System.out.println("3 - Aluno de doutorado");
+                                    System.out.println("4 - Cancelar");
+                                    System.out.print("=====> Escolha uma opção: ");
+                                    menu = entrada.nextInt();
+                                    switch (menu) {
+                                        case 1:
+                                            cadastrarColaborador("Aluno de graduação");
+                                            menu = 4;
+                                            break;
+                                        case 2:
+                                            cadastrarColaborador("Aluno de mestrado");
+                                            menu = 4;
+                                            break;
+                                        case 3:
+                                            cadastrarColaborador("Aluno de doutorado");
+                                            menu = 4;
+                                            break;
+                                        case 4:
+                                            break;
+                                        default:
+                                            System.out.println("\nOpção inválida.\n");
+                                    }
+                                } while (menu != 4);
                                 break;
                             case 2:
                                 cadastrarColaborador("Professor");
@@ -171,7 +202,7 @@ public class AppSistema {
                             case 4:
                                 break;
                             default:
-                                System.out.println("\nOpção inválida.");
+                                System.out.println("\nOpção inválida.\n");
                         }
                     } while (menu != 4);
                     break;
@@ -201,7 +232,7 @@ public class AppSistema {
                                         default:
                                             System.out.println("\nOpção inválida.\n");
                                     }
-                                } while (menu != 2 && menu != 1);
+                                } while (menu != 1 && menu != 2);
                             }
                         } while (menu == 1);
                     } else {
@@ -216,7 +247,7 @@ public class AppSistema {
 
                         switch (menu) {
                             case 1:     //Cadastrar publicação
-                                System.out.println("\n====== Cadastrar Produção Acadêmica ======");
+                                System.out.println("\n====== Cadastrar Publicação ======");
                                 System.out.print("Digite o título da publicação: ");
                                 tituloPub = entradaString.nextLine();
                                 System.out.print("Digite o nome da conferência onde foi publicada: ");
@@ -228,6 +259,8 @@ public class AppSistema {
 
                                 Laboratorio.adicionarPublicacao(pub);
                                 System.out.println("\nPublicação adicionada com sucesso.");
+                                System.out.println(pub.imprimir());
+                                System.out.println("\nConsulte a publicação através do menu principal para acessar opções adicionais,\ncomo adicionar autores e associar a um projeto.");
 
                                 menu = 3;
                                 break;
@@ -247,71 +280,91 @@ public class AppSistema {
 
                 case 6:     //6 - Consultar publicação
                     if (!Laboratorio.getListaPublicacoes().isEmpty()){     //Verifica se existem publicações cadastrados
+                        System.out.println("\nDigite o título da publicação a ser consultada:");
+                        tituloPub = entradaString.nextLine();
+
+                        if (Laboratorio.verificarPublicaao(tituloPub)) {     //Verifica se a publicação existe
+                            System.out.println(Laboratorio.pesquisarPublicacao(tituloPub));     //Imprime os dados da publicação
+                        } else {
+                            System.out.println("\nPublicação não encontrada.");
+                            break;
+                        }
+
                         do {
-                            System.out.println("\nDigite o título da publicação a ser consultada:");
-                            tituloPub = entradaString.nextLine();
+                            exibirMenu6();
+                            menu = entrada.nextInt();
 
-                            if (Laboratorio.verificarPublicaao(tituloPub)) {     //Verifica se a publicação existe
-                                System.out.println(Laboratorio.pesquisarPublicacao(tituloPub));     //Imprime os dados da publicação
-                                break;
-                            } else {
-                                System.out.println("\nPublicação não encontrada.");
-                                do {
-                                    System.out.println("1 - Tentar novamente");
-                                    System.out.println("2 - Voltar");
-                                    System.out.print("=====> Escolha uma opção: ");
-                                    menu = entrada.nextInt();
+                            switch (menu) {
+                                case 1:     //1 - Incluir autores
+                                    do {
+                                        System.out.println("\nDigite o nome do colaborador:");
+                                        nomeColab = entradaString.nextLine();
 
-                                    switch (menu) {
-                                        case 1:
-                                            continue;
-                                        case 2:
-                                            break;
-                                        default:
-                                            System.out.println("\nOpção inválida.\n");
-                                    }
-                                } while (menu != 2 && menu != 1);
-                            }
-
-                            do {
-                                exibirMenu6();
-                                menu2 = entrada.nextInt();
-
-                                switch (menu2) {
-                                    case 1:     //1 - Incluir autores
-                                        do {
-                                            System.out.println("\nDigite o nome do colaborador:");
-                                            nomeColab = entradaString.nextLine();
-
-                                            if (Laboratorio.verificarColaborador(nomeColab)) {
-                                                Laboratorio.associarPub(tituloPub, nomeColab);
-                                                System.out.println("\nO colaborador agora é um autor da publicação.");
-                                                break;
-                                            } else {
-                                                System.out.println("\nColaborador não encontrado.\nCadastre o colaborador no sistema antes de associá-lo a uma publicação.\n");
+                                        if (Laboratorio.verificarColaborador(nomeColab)) {
+                                            Laboratorio.associarColabPub(tituloPub, nomeColab);
+                                            System.out.println("\nO colaborador agora é um autor da publicação.");
+                                            do {
+                                                System.out.println("1 - Adicionar outro autor");
+                                                System.out.println("2 - Finalizar");
+                                                System.out.print("=====> Escolha uma opção: ");
+                                                menu2 = entrada.nextInt();
+                                                if (menu2 != 1 & menu2 != 2) {
+                                                    System.out.println("\nOpção inválida.\n");
+                                                }
+                                            } while (menu2 != 1 & menu2 != 2);
+                                        } else {
+                                            System.out.println("\nColaborador não encontrado.\nCadastre o colaborador no sistema antes de associá-lo a uma publicação.\n");
+                                            do {
                                                 System.out.println("1 - Tentar novamente");
                                                 System.out.println("2 - Voltar");
                                                 System.out.print("=====> Escolha uma opção: ");
                                                 menu2 = entrada.nextInt();
+                                                if (menu2 != 1 & menu2 != 2) {
+                                                    System.out.println("\nOpção inválida.\n");
+                                                }
+                                            } while (menu2 != 1 & menu2 != 2);
+                                        }
+                                    } while (menu2 != 2);
+                                    break;
+
+                                case 2:     //2 - Associar a um projeto
+                                    do {
+                                        System.out.println("\nDigite o título do projeto:");
+                                        tituloProj = entradaString.nextLine();
+
+                                        if (Laboratorio.verificarProjeto(tituloProj)) {
+                                            if (Laboratorio.verificarStatusProj(tituloProj, "Em andamento")) {
+                                                Laboratorio.associarPubProj(tituloProj, tituloPub);
+                                                System.out.println("\nProjeto associado com sucesso.");
+                                                break;
+                                            } else {
+                                                System.out.println("\nPublicações só podem ser associadas a projetos em andamento.");
                                             }
-                                        } while (menu2 != 2);
-                                        break;
+                                        } else {
+                                            System.out.println("\nProjeto não encontrado.\n");
+                                            do {
+                                                System.out.println("1 - Tentar novamente");
+                                                System.out.println("2 - Voltar");
+                                                System.out.print("=====> Escolha uma opção: ");
+                                                menu = entrada.nextInt();
+                                                if (menu != 1 & menu != 2) {
+                                                    System.out.println("\nOpção inválida.\n");
+                                                }
+                                            } while (menu != 1 & menu != 2);
+                                        }
+                                    } while (menu != 2);
+                                    break;
 
-                                    case 2:
-                                        break;
+                                case 3:
+                                    break;
 
-                                    default:
-                                        System.out.println("\nOpção inválida.");
-                                }
-                            } while (menu2 != 2);
-
-                        } while (menu == 1);
+                                default:
+                                    System.out.println("\nOpção inválida.");
+                            }
+                        } while (menu != 3);
                     } else {
                         System.out.println("\nNão existem publicações cadastradas.");
                     }
-
-
-
                     break;
 
                 case 7:     //7 - Relatório do laboratório
@@ -351,6 +404,7 @@ public class AppSistema {
         colab = new Colaborador(nomeColab, email, ocupacao);
         Laboratorio.adicionarColaborador(colab);
         System.out.println("\nColaborador cadastrado com sucesso.");
+        System.out.println(colab.imprimir());
     }
 
     static void exibirMenu() {     //Menu principal
@@ -393,8 +447,9 @@ public class AppSistema {
 
     static void exibirMenu6() {     //Menu de "Consultar produção acadêmica"
         System.out.println("\n====== OPÇÕES DA PUBLICAÇÃO ======");
-        System.out.println("1 - Inlcuir autores");
-        System.out.println("2 - Voltar");
+        System.out.println("1 - Incluir autores");
+        System.out.println("2 - Associar a um projeto");
+        System.out.println("3 - Voltar");
         System.out.print("=====> Escolha uma opção: ");
     }
 }

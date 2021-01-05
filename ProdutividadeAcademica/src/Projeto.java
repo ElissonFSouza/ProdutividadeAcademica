@@ -12,12 +12,17 @@ public class Projeto {
     private String objetivo;
     private String descricao;
     private String status;
-    private ArrayList<Colaborador> listaParticipantes = new ArrayList<>(); //lista dos participantes do projeto
+    private ArrayList<Colaborador> listaParticipantes = new ArrayList<>(); //Lista dos participantes do projeto
+    private ArrayList<Publicacao> listaPublicacoesAssociadas = new ArrayList<>(); //Lista das publicações associadas ao projeto
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public ArrayList<Colaborador> getListaParticipantes() {
         return listaParticipantes;
+    }
+
+    public ArrayList<Publicacao> getListaPublicacoesAssociadas() {
+        return listaPublicacoesAssociadas;
     }
 
     public Projeto(){}
@@ -95,6 +100,10 @@ public class Projeto {
         listaParticipantes.add(colab);
     }
 
+    public void adicionarPublicacao(Publicacao pub) {
+        listaPublicacoesAssociadas.add(pub);
+    }
+
     public boolean verificarProfessor() { // verifica se existe algum professor entre os participantes
         for(Colaborador colab : listaParticipantes){
             if(colab.getOcupacao().equals("Professor")){
@@ -119,15 +128,24 @@ public class Projeto {
         if (getListaParticipantes().isEmpty()) {
             participantes = " Não há colaboradores alocados ao projeto.";
         } else {
-            for(Colaborador colab : listaParticipantes){
+            for(Colaborador colab : listaParticipantes) {
                 participantes += "\n" + colab.getNome() + " (" + colab.getOcupacao() + ")";
             }
         }
 
-        return "Título do projeto: " + titulo + "\nData de início: " + sdf.format(dataInicio)
-                + "\nData de término: " + sdf.format(dataFim) + "\nAgência financiadora: " + agenciaFinanciadora + "\nValor financiado: "
-                + String.format("R$ %.2f", valorFinanciado) + "\nObjetivo: " + objetivo + "\nDescrição: " + descricao
-                + "\nStatus: " + status + "\nParticipantes:" + participantes;
+        String publicacoes = "";
+        if (getListaPublicacoesAssociadas().isEmpty()) {
+            publicacoes = " Não há publicações associadas ao projeto.";
+        } else {
+            for(Publicacao pub : listaPublicacoesAssociadas) {
+                publicacoes += "\n" + pub.getTitulo();
+            }
+        }
+
+        return "- Título do projeto: " + titulo + "\n- Data de início: " + sdf.format(dataInicio)
+                + "\n- Data de término: " + sdf.format(dataFim) + "\n- Agência financiadora: " + agenciaFinanciadora + "\n- Valor financiado: "
+                + String.format("R$ %.2f", valorFinanciado) + "\n- Objetivo: " + objetivo + "\n- Descrição: " + descricao
+                + "\n- Status: " + status + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes;
     }
 }
 
