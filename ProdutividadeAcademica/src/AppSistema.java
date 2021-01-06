@@ -477,6 +477,8 @@ public class AppSistema {
                     System.out.println("Número de projetos em andamento: " + Laboratorio.qtdProjetosAndamento());
                     System.out.println("Número de porjetos concluídos: " + Laboratorio.qtdProjetosConcluidos());
                     System.out.println("Número total de projetos: " + Laboratorio.getListaProjetos().size());
+                    System.out.println("Número de publicações: " + Laboratorio.getListaPublicacoes().size());
+                    System.out.println("Número de orientações: " + Laboratorio.getListaOrientacoes().size());
 
                     //System.out.println(""); //Número de produção acadêmica por tipo de produção
                     break;

@@ -14,6 +14,10 @@ public class Laboratorio {
         return listaPublicacoes;
     }
 
+    public static ArrayList<Orientacao> getListaOrientacoes() {
+        return listaOrientacoes;
+    }
+
     public static ArrayList<Colaborador> getListaColaboradores() {
         return listaColaboradores;
     }
@@ -29,16 +33,6 @@ public class Laboratorio {
     public static void adicionarColaborador(Colaborador colab) {
         listaColaboradores.add(colab);
     }
-
-    /*public static String listarProjetos() { //Imprime os dados de todos os projetos cadastrados
-        String saida = "";
-        int i = 1;
-        for(Projeto proj : listaProjetos){
-            saida += "\n- Projeto nº " + (i++) + "\n";
-            saida += proj.imprimir();
-        }
-        return saida;
-    }*/
 
     public static int qtdProjetosElaboracao() { //Retorna a quantidade de projetos em elaboração
         int qtd = 0;
@@ -171,7 +165,7 @@ public class Laboratorio {
         return "\nColaborador não encontrado.\n";
     }
 
-    public static boolean verificarPublicacao(String titulo) { //Verifica se existe uma publicação com o título digitado e retorna True ou False
+    public static boolean verificarPublicacao(String titulo) {     //Verifica se existe uma publicação com o título digitado e retorna True ou False
         for(Publicacao pub : listaPublicacoes) {
             if (pub.getTitulo().equalsIgnoreCase(titulo)) {
                 return true;
@@ -256,41 +250,37 @@ public class Laboratorio {
         Orientacao ori;
         Projeto proj = null;
         Professor prof = null;
-        String nomeProf, ocupacao, email;
-        ArrayList<Projeto> listaMeusProjetos;
-        ArrayList<Publicacao> listaMinhasPublicacoes;
         Colaborador colab = null;
 
-        for(Colaborador colabAux : listaColaboradores) {
+        for(Colaborador colabAux : listaColaboradores) {     //Resgata o colaborador professor da lista de colaboradores para adicioná-lo à orientação
             if (colabAux.getNome().equalsIgnoreCase(nome)) {
-                nomeProf = colabAux.getNome();
-                ocupacao = colabAux.getOcupacao();
-                email = colabAux.getEmail();
-                listaMeusProjetos = colabAux.getListaMeusProjetos();
-                listaMinhasPublicacoes = colabAux.getListaMinhasPublicacoes();
+                String nomeProf = colabAux.getNome();
+                String ocupacao = colabAux.getOcupacao();
+                String email = colabAux.getEmail();
+                ArrayList<Projeto> listaMeusProjetos = colabAux.getListaMeusProjetos();
+                ArrayList<Publicacao> listaMinhasPublicacoes = colabAux.getListaMinhasPublicacoes();
                 prof = new Professor(nomeProf, ocupacao, email, listaMeusProjetos, listaMinhasPublicacoes);
                 break;
             }
         }
-        for(Colaborador colabAux : listaColaboradores) {
+        for(Colaborador colabAux : listaColaboradores) {     //Resgata o colaborador da lista de colaboradores para adicioná-lo à orientação
             if (colabAux.getNome().equalsIgnoreCase(nome2)) {
                 colab = colabAux;
                 break;
             }
         }
-        for(Projeto projAux : listaProjetos) {
-            if (projAux.getTitulo().equalsIgnoreCase(titulo)) {
-                proj = projAux;
-                break;
-            }
-        }
 
-        if (titulo == null) {
+        if (titulo == null) {     //Salva a orientação com os dados dos colaboradores e projeto resgatados
             ori = new Orientacao(prof, colab);
         } else {
+            for(Projeto projAux : listaProjetos) {
+                if (projAux.getTitulo().equalsIgnoreCase(titulo)) {     //Resgata o projeto da lista de projetos para adicioná-lo à orientação
+                    proj = projAux;
+                    break;
+                }
+            }
             ori = new Orientacao(prof, colab, proj);
         }
-
         listaOrientacoes.add(ori);
     }
 

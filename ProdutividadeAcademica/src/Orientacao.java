@@ -25,8 +25,8 @@ public class Orientacao {
         this.profOrientador = profOrientador;
     }
 
-    public Colaborador getAlunoOrientado() {
-        return alunoOrientado;
+    public String getAlunoOrientado() {
+        return alunoOrientado.getNome();
     }
     public void setAlunoOrientado(Colaborador alunoOrientado) {
         this.alunoOrientado = alunoOrientado;

@@ -4,8 +4,8 @@ public class Colaborador {
     private String nome;
     private String ocupacao;
     private String email;
-    private ArrayList<Projeto> listaMeusProjetos = new ArrayList<>(); //lista dos projetos do colaborador
-    private ArrayList<Publicacao> listaMinhasPublicacoes = new ArrayList<>(); //lista das publicações do colaborador
+    private ArrayList<Projeto> listaMeusProjetos = new ArrayList<>();    //lista dos projetos do colaborador
+    private ArrayList<Publicacao> listaMinhasPublicacoes = new ArrayList<>();    //lista das publicações do colaborador
 
     public ArrayList<Projeto> getListaMeusProjetos() {
         return listaMeusProjetos;
@@ -60,7 +60,7 @@ public class Colaborador {
         listaMinhasPublicacoes.add(pub);
     }
 
-    public boolean verificarSituacao() {
+    public boolean verificarSituacao() {     //Retorna a quantidade de projetos em andamento que o aluno participa
         int qtd = 0;
         for(Projeto proj : listaMeusProjetos){
             if (ocupacao.equals("Aluno") && proj.getStatus().equals("Em andamento")) {
