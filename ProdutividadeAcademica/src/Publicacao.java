@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class Publicacao {
+public class Publicacao implements Comparable<Publicacao> {
     private String titulo;
     private String conferencia;
     private int anoPublic;
-    private ArrayList<Colaborador> listaAutores = new ArrayList<>();
+    private final ArrayList<Colaborador> listaAutores = new ArrayList<>();
     private Projeto projetoAssociado = null;
 
     public ArrayList<Colaborador> getListaAutores() {
@@ -73,5 +73,10 @@ public class Publicacao {
         return "- Título da publicação: " + titulo + "\n- Conferência onde foi publicada: "
                 + conferencia + "\n- Ano de publicação: " + anoPublic + "\n- Autores:" + autores
                 + "\n- Projeto associado: " + projeto;
+    }
+
+    @Override
+    public int compareTo(Publicacao pub) {
+        return (pub.anoPublic - this.anoPublic);
     }
 }

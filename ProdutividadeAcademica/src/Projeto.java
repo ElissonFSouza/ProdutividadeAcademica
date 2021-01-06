@@ -1,9 +1,10 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
-public class Projeto {
+public class Projeto implements Comparable<Projeto>{
     private String titulo;
     private Date dataInicio;
     private Date dataFim;
@@ -102,6 +103,7 @@ public class Projeto {
 
     public void adicionarPublicacao(Publicacao pub) {
         listaPublicacoesAssociadas.add(pub);
+        Collections.sort(listaPublicacoesAssociadas);
     }
 
     public boolean verificarProfessor() { // verifica se existe algum professor entre os participantes
@@ -137,7 +139,7 @@ public class Projeto {
             publicacoes = " Não há publicações associadas ao projeto.";
         } else {
             for(Publicacao pub : listaPublicacoesAssociadas) {
-                publicacoes += "\n" + pub.getTitulo();
+                publicacoes += "\n" + pub.getTitulo() + " (" + pub.getAnoPublic() + ")";
             }
         }
 
@@ -145,6 +147,11 @@ public class Projeto {
                 + "\n- Data de término: " + sdf.format(dataFim) + "\n- Agência financiadora: " + agenciaFinanciadora + "\n- Valor financiado: "
                 + String.format("R$ %.2f", valorFinanciado) + "\n- Objetivo: " + objetivo + "\n- Descrição: " + descricao
                 + "\n- Status: " + status + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes;
+    }
+
+    @Override
+    public int compareTo(Projeto proj) {
+        return (proj.dataFim.g - this.dataFim);
     }
 }
 

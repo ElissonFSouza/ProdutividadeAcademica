@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Colaborador {
     private String nome;
@@ -54,10 +55,12 @@ public class Colaborador {
 
     public void adicionarProjeto(Projeto proj){
         listaMeusProjetos.add(proj);
+        Collections.sort(listaMeusProjetos);
     }
 
     public void adicionarPublicacao(Publicacao pub){
         listaMinhasPublicacoes.add(pub);
+        Collections.sort(listaMinhasPublicacoes);
     }
 
     public boolean verificarSituacao() {     //Retorna a quantidade de projetos em andamento que o aluno participa
@@ -76,7 +79,7 @@ public class Colaborador {
             publicacoes = " Este colaborador não é autor de nenhuma publicação.";
         } else {
             for(Publicacao pub : listaMinhasPublicacoes){
-                publicacoes += "\n" + pub.getTitulo();
+                publicacoes += "\n" + pub.getTitulo() + " (" + pub.getAnoPublic() + ")";
             }
         }
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Laboratorio {
     private static final ArrayList<Projeto> listaProjetos = new ArrayList<>();
@@ -28,6 +29,7 @@ public class Laboratorio {
 
     public static void adicionarPublicacao(Publicacao pub) {
         listaPublicacoes.add(pub);
+        Collections.sort(listaPublicacoes);
     }
 
     public static void adicionarColaborador(Colaborador colab) {
