@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Laboratorio {
     private static final ArrayList<Projeto> listaProjetos = new ArrayList<>();
     private static final ArrayList<Publicacao> listaPublicacoes = new ArrayList<>();
+    private static final ArrayList<Orientacao> listaOrientacoes = new ArrayList<>();
     private static final ArrayList<Colaborador> listaColaboradores = new ArrayList<>();
 
     public static ArrayList<Projeto> getListaProjetos() {
@@ -94,9 +95,8 @@ public class Laboratorio {
                         && proj.getObjetivo() != null && !proj.getObjetivo().isEmpty()
                         && proj.getDescricao() != null && !proj.getDescricao().isEmpty()) {
                     return true;
-                } else {
-                    break;
                 }
+                break;
             }
         }
         return false;
@@ -111,10 +111,34 @@ public class Laboratorio {
         return false;
     }
 
+    public static boolean verificarPubProjeto(String titulo) {
+        for(Projeto proj : listaProjetos) {
+            if (proj.getTitulo().equalsIgnoreCase(titulo)) {
+                if (!proj.getListaPublicacoesAssociadas().isEmpty()) {
+                    return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
     public static boolean verificarProjeto(String titulo) { //Verifica se existe um projeto com o nome digitado e retorna True ou False
         for(Projeto proj : listaProjetos) {
             if (proj.getTitulo().equalsIgnoreCase(titulo)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean verificarOcupacaoColab(String nome, String ocupacao) {
+        for(Colaborador colab : listaColaboradores) {
+            if (colab.getNome().equalsIgnoreCase(nome)) {
+                if (colab.getOcupacao().equals(ocupacao)) {
+                    return true;
+                }
+                break;
             }
         }
         return false;
@@ -147,7 +171,7 @@ public class Laboratorio {
         return "\nColaborador não encontrado.\n";
     }
 
-    public static boolean verificarPublicaao(String titulo) { //Verifica se existe uma publicação com o título digitado e retorna True ou False
+    public static boolean verificarPublicacao(String titulo) { //Verifica se existe uma publicação com o título digitado e retorna True ou False
         for(Publicacao pub : listaPublicacoes) {
             if (pub.getTitulo().equalsIgnoreCase(titulo)) {
                 return true;
@@ -208,7 +232,7 @@ public class Laboratorio {
     }
 
     public static void associarPubProj(String tituloProj, String tituloPub) { //Inclui a publicação na lista de publicações do projeto
-        Publicacao pub2 = null;                                               //e inclui o projeto na lista de projetos da publicação
+        Publicacao pub2 = null;                                               //e vice-versa
         for(Publicacao pub : listaPublicacoes) {
             if (pub.getTitulo().equalsIgnoreCase(tituloPub)) {
                 pub2 = pub;
@@ -223,9 +247,51 @@ public class Laboratorio {
             }
         }
         if (pub2 != null && proj2 != null) {
-            pub2.adicionarProjeto(proj2);
+            pub2.setProjetoAssociado(proj2);
             proj2.adicionarPublicacao(pub2);
         }
+    }
+
+    public static void criarOrientacao(String nome, String nome2, String titulo) {
+        Orientacao ori;
+        Projeto proj = null;
+        Professor prof = null;
+        String nomeProf, ocupacao, email;
+        ArrayList<Projeto> listaMeusProjetos;
+        ArrayList<Publicacao> listaMinhasPublicacoes;
+        Colaborador colab = null;
+
+        for(Colaborador colabAux : listaColaboradores) {
+            if (colabAux.getNome().equalsIgnoreCase(nome)) {
+                nomeProf = colabAux.getNome();
+                ocupacao = colabAux.getOcupacao();
+                email = colabAux.getEmail();
+                listaMeusProjetos = colabAux.getListaMeusProjetos();
+                listaMinhasPublicacoes = colabAux.getListaMinhasPublicacoes();
+                prof = new Professor(nomeProf, ocupacao, email, listaMeusProjetos, listaMinhasPublicacoes);
+                break;
+            }
+        }
+        for(Colaborador colabAux : listaColaboradores) {
+            if (colabAux.getNome().equalsIgnoreCase(nome2)) {
+                colab = colabAux;
+                break;
+            }
+        }
+        for(Projeto projAux : listaProjetos) {
+            if (projAux.getTitulo().equalsIgnoreCase(titulo)) {
+                proj = projAux;
+                break;
+            }
+        }
+
+        if (titulo == null) {
+            ori = new Orientacao(prof, colab);
+        } else {
+            ori = new Orientacao(prof, colab, proj);
+        }
+
+        listaOrientacoes.add(ori);
     }
 
     public static void alterarStatus(String titulo) {

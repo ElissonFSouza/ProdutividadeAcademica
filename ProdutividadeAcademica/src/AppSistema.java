@@ -11,7 +11,7 @@ public class AppSistema {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         int menu, menu2;
         boolean concluido;
-        String nomeColab;
+        String nomeColab, nomeColab2;
 
         Projeto proj;
         String tituloProj;
@@ -141,17 +141,31 @@ public class AppSistema {
                                         System.out.println("\nO projeto não pode ser iniciado. Um aluno não pode participar de mais de 2 projetos em andamento.");
                                     } else {
                                         Laboratorio.alterarStatus(tituloProj);
-                                        System.out.println("\nProjeto iniciado com sucesso.\nStatus Atual: Em andamento");
+                                        System.out.println("\nProjeto iniciado com sucesso.\nStatus atual: Em andamento");
                                     }
                                     break;
 
-                                case 3:     //Voltar
+                                case 3:     //3 - Concluir projeto
+                                    if (!Laboratorio.verificarStatusProj(tituloProj, "Em andamento")) {
+                                        if (Laboratorio.verificarStatusProj(tituloProj, "Em elaboração")) {
+                                            System.out.println("\nProjetos em elaboração não podem ser concluídos.");
+                                        } else if (Laboratorio.verificarStatusProj(tituloProj, "Concluído")) {
+                                            System.out.println("\nO projeto já foi concluído anteriormente.");
+                                        }
+                                    } else if (!Laboratorio.verificarPubProjeto(tituloProj)) {
+                                        System.out.println("\nO projeto não pode ser concluído. Deve existir publicações associadas ao projeto.");
+                                    } else {
+                                        Laboratorio.alterarStatus(tituloProj);
+                                        System.out.println("\nProjeto concluído com sucesso.\nStatus atual: Concluído");
+                                    }
+
+                                case 4:     //Voltar
                                     break;
 
                                 default:
-                                    System.out.println("\nOpção inválida.");
+                                    System.out.println("\nOpção inválida.\n");
                             }
-                        } while (menu != 3);
+                        } while (menu != 4);
                     } else {
                         System.out.println("\nNão existem projetos cadastrados.");
                     }
@@ -164,7 +178,7 @@ public class AppSistema {
                         switch (menu) {
                             case 1:
                                 do {
-                                    System.out.println("Que tipo de aluno?");
+                                    System.out.println("\nQue tipo de aluno?");
                                     System.out.println("1 - Aluno de graduação");
                                     System.out.println("2 - Aluno de mestrado");
                                     System.out.println("3 - Aluno de doutorado");
@@ -266,14 +280,103 @@ public class AppSistema {
                                 break;
 
                             case 2:     // Cadastrar orientação
+                                System.out.println("\n====== Cadastrar Orientação ======");
+                                do {
+                                    System.out.println("Digite o nome do colaborador orientador:");
+                                    nomeColab = entradaString.nextLine();
 
+                                    if (Laboratorio.verificarColaborador(nomeColab)) {
+                                        if (Laboratorio.verificarOcupacaoColab(nomeColab, "Professor")) {
+                                            do {
+                                                System.out.println("Digite o nome do colaborador a ser orientado:");
+                                                nomeColab2 = entradaString.nextLine();
+
+                                                if (Laboratorio.verificarColaborador(nomeColab2)) {
+                                                    if (Laboratorio.verificarOcupacaoColab(nomeColab2, "Aluno de graduação")
+                                                    || Laboratorio.verificarOcupacaoColab(nomeColab2, "Aluno de mestrado")
+                                                    || Laboratorio.verificarOcupacaoColab(nomeColab2, "Aluno de doutorado")) {
+                                                        do {
+                                                            System.out.println("\nDeseja associar esta orientação a um projeto?");
+                                                            System.out.println("1 - Sim");
+                                                            System.out.println("2 - Não");
+                                                            System.out.print("=====> Escolha uma opção: ");
+                                                            menu = entrada.nextInt();
+                                                            if (menu != 1 & menu != 2) {
+                                                                System.out.println("\nOpção inválida.\n");
+                                                            }
+                                                        } while (menu != 1 & menu != 2);
+                                                        if (menu == 1) {
+                                                            do {
+                                                                System.out.println("\nDigite o título do projeto:");
+                                                                tituloProj = entradaString.nextLine();
+
+                                                                if (Laboratorio.verificarProjeto(tituloProj)) {
+                                                                    if (Laboratorio.verificarStatusProj(tituloProj, "Em andamento")) {
+                                                                        Laboratorio.criarOrientacao(nomeColab, nomeColab2, tituloProj);
+                                                                        System.out.println("\nOrientação cadastrada com sucesso.");
+                                                                        break;
+                                                                    } else {
+                                                                        System.out.println("\nOrientações só podem ser associadas a projetos em andamento.");
+                                                                    }
+                                                                } else {
+                                                                    System.out.println("\nProjeto não encontrado.");
+                                                                    do {
+                                                                        System.out.println("1 - Tentar novamente");
+                                                                        System.out.println("2 - Voltar");
+                                                                        System.out.print("=====> Escolha uma opção: ");
+                                                                        menu = entrada.nextInt();
+                                                                        if (menu != 1 & menu != 2) {
+                                                                            System.out.println("\nOpção inválida.\n");
+                                                                        }
+                                                                    } while (menu != 1 & menu != 2);
+                                                                }
+                                                            } while (menu != 2);
+                                                        } else {
+                                                            Laboratorio.criarOrientacao(nomeColab,nomeColab2, null);
+                                                            System.out.println("\nOrientação cadastrada com sucesso.");
+                                                        }
+                                                    } else {
+                                                        System.out.println("\nO colaborador não é um professor. Operação cancelada.");
+                                                    }
+                                                    break;
+                                                } else {
+                                                    System.out.println("\nColaborador não encontrado.");
+                                                    do {
+                                                        System.out.println("1 - Tentar novamente");
+                                                        System.out.println("2 - Voltar");
+                                                        System.out.print("=====> Escolha uma opção: ");
+                                                        menu = entrada.nextInt();
+                                                        if (menu != 1 & menu != 2) {
+                                                            System.out.println("\nOpção inválida.\n");
+                                                        }
+                                                    } while (menu != 1 & menu != 2);
+                                                }
+                                            } while (menu != 2);
+                                        } else {
+                                            System.out.println("\nO colaborador não é um professor. Operação cancelada.");
+                                        }
+                                        break;
+                                    } else {
+                                        System.out.println("\nColaborador não encontrado.");
+                                        do {
+                                            System.out.println("1 - Tentar novamente");
+                                            System.out.println("2 - Voltar");
+                                            System.out.print("=====> Escolha uma opção: ");
+                                            menu = entrada.nextInt();
+                                            if (menu != 1 & menu != 2) {
+                                                System.out.println("\nOpção inválida.\n");
+                                            }
+                                        } while (menu != 1 & menu != 2);
+                                    }
+                                } while (menu != 2);
+                                menu = 3;
                                 break;
 
                             case 3:     //Cancelar
                                 break;
 
                             default:
-                                System.out.println("\nOpção inválida.");
+                                System.out.println("\nOpção inválida.\n");
                         }
                     } while (menu != 3);
                     break;
@@ -283,7 +386,7 @@ public class AppSistema {
                         System.out.println("\nDigite o título da publicação a ser consultada:");
                         tituloPub = entradaString.nextLine();
 
-                        if (Laboratorio.verificarPublicaao(tituloPub)) {     //Verifica se a publicação existe
+                        if (Laboratorio.verificarPublicacao(tituloPub)) {     //Verifica se a publicação existe
                             System.out.println(Laboratorio.pesquisarPublicacao(tituloPub));     //Imprime os dados da publicação
                         } else {
                             System.out.println("\nPublicação não encontrada.");
@@ -341,7 +444,7 @@ public class AppSistema {
                                                 System.out.println("\nPublicações só podem ser associadas a projetos em andamento.");
                                             }
                                         } else {
-                                            System.out.println("\nProjeto não encontrado.\n");
+                                            System.out.println("\nProjeto não encontrado.");
                                             do {
                                                 System.out.println("1 - Tentar novamente");
                                                 System.out.println("2 - Voltar");
@@ -359,7 +462,7 @@ public class AppSistema {
                                     break;
 
                                 default:
-                                    System.out.println("\nOpção inválida.");
+                                    System.out.println("\nOpção inválida.\n");
                             }
                         } while (menu != 3);
                     } else {
@@ -383,7 +486,7 @@ public class AppSistema {
                     break;
 
                 default:
-                    System.out.println("\nOpção inválida.");
+                    System.out.println("\nOpção inválida.\n");
             }
         } while (menu != 8);
 
@@ -392,6 +495,7 @@ public class AppSistema {
     static void cadastrarColaborador(String ocupacao) {
         Scanner entradaString = new Scanner(System.in);
         Colaborador colab;
+        Professor prof;
         String nomeColab;
         String email;
 
@@ -401,10 +505,16 @@ public class AppSistema {
         System.out.print("Digite o email: ");
         email = entradaString.nextLine();
 
-        colab = new Colaborador(nomeColab, email, ocupacao);
-        Laboratorio.adicionarColaborador(colab);
         System.out.println("\nColaborador cadastrado com sucesso.");
-        System.out.println(colab.imprimir());
+
+        if (ocupacao.equals("Professor")) {
+            prof = new Professor(nomeColab, email, ocupacao);
+            Laboratorio.adicionarColaborador(prof);
+        } else {
+            colab = new Colaborador(nomeColab, email, ocupacao);
+            Laboratorio.adicionarColaborador(colab);
+            System.out.println(colab.imprimir());
+        }
     }
 
     static void exibirMenu() {     //Menu principal
@@ -424,7 +534,8 @@ public class AppSistema {
         System.out.println("\n====== OPÇÕES DO PROJETO ======");
         System.out.println("1 - Alocar participante");
         System.out.println("2 - Iniciar projeto");
-        System.out.println("3 - Voltar");
+        System.out.println("3 - Concluir projeto");
+        System.out.println("4 - Voltar");
         System.out.print("=====> Escolha uma opção: ");
     }
 

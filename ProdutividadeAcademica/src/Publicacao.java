@@ -5,17 +5,15 @@ public class Publicacao {
     private String conferencia;
     private int anoPublic;
     private ArrayList<Colaborador> listaAutores = new ArrayList<>();
-    private ArrayList<Projeto> listaProjetosAssociados = new ArrayList<>();
+    private Projeto projetoAssociado = null;
 
     public ArrayList<Colaborador> getListaAutores() {
         return listaAutores;
     }
 
-    public ArrayList<Projeto> getListaProjetosAssociados() {
-        return listaProjetosAssociados;
+    public Publicacao() {
+        this.projetoAssociado = new Projeto();
     }
-
-    public Publicacao() {}
 
     public Publicacao(String titulo, String conferencia, int anoPublic) {
         this.titulo = titulo;
@@ -44,12 +42,15 @@ public class Publicacao {
         this.anoPublic = anoPublic;
     }
 
-    public void adicionarAutor(Colaborador colab){
-        listaAutores.add(colab);
+    public Projeto getProjetoAssociado() {
+        return projetoAssociado;
+    }
+    public void setProjetoAssociado(Projeto projetoAssociado) {
+        this.projetoAssociado = projetoAssociado;
     }
 
-    public void adicionarProjeto(Projeto proj) {
-        listaProjetosAssociados.add(proj);
+    public void adicionarAutor(Colaborador colab){
+        this.listaAutores.add(colab);
     }
 
     public String imprimir() {
@@ -62,17 +63,15 @@ public class Publicacao {
             }
         }
 
-        String projetos = "";
-        if (getListaProjetosAssociados().isEmpty()) {
-            projetos = " Não há projetos associados à publicação.";
+        String projeto = "";
+        if (projetoAssociado == null) {
+            projeto = "Não há projeto associado à publicação.";
         } else {
-            for(Projeto proj : listaProjetosAssociados){
-                projetos += "\n" + proj.getTitulo() + " (" + proj.getStatus() + ")";
-            }
+            projeto = projetoAssociado.getTitulo();
         }
 
         return "- Título da publicação: " + titulo + "\n- Conferência onde foi publicada: "
                 + conferencia + "\n- Ano de publicação: " + anoPublic + "\n- Autores:" + autores
-                + "\n- Projetos associados:" + projetos;
+                + "\n- Projeto associado: " + projeto;
     }
 }

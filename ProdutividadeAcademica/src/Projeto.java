@@ -114,7 +114,6 @@ public class Projeto {
     }
 
     public boolean verificarSituacaoAluno() {
-        int qtd = 0;
         for(Colaborador colab : listaParticipantes){
             if (!colab.verificarSituacao()) {
                 return false;

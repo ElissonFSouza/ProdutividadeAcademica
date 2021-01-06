@@ -23,6 +23,14 @@ public class Colaborador {
         this.ocupacao = ocupacao;
     }
 
+    public Colaborador(String nome, String ocupacao, String email, ArrayList<Projeto> listaMeusProjetos, ArrayList<Publicacao> listaMinhasPublicacoes) {
+        this.nome = nome;
+        this.ocupacao = ocupacao;
+        this.email = email;
+        this.listaMeusProjetos = listaMeusProjetos;
+        this.listaMinhasPublicacoes = listaMinhasPublicacoes;
+    }
+
     public String getNome() {
         return nome;
     }
