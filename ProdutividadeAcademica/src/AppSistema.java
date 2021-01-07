@@ -472,15 +472,13 @@ public class AppSistema {
 
                 case 7:     //7 - Relatório do laboratório
                     System.out.println("\n====== Dados Gerais do Laboratório ======");
-                    System.out.println("Número de colaboradores: " + Laboratorio.getListaColaboradores().size());
-                    System.out.println("Número de projetos em elaboração: " + Laboratorio.qtdProjetosElaboracao());
-                    System.out.println("Número de projetos em andamento: " + Laboratorio.qtdProjetosAndamento());
-                    System.out.println("Número de porjetos concluídos: " + Laboratorio.qtdProjetosConcluidos());
-                    System.out.println("Número total de projetos: " + Laboratorio.getListaProjetos().size());
-                    System.out.println("Número de publicações: " + Laboratorio.getListaPublicacoes().size());
-                    System.out.println("Número de orientações: " + Laboratorio.getListaOrientacoes().size());
-
-                    //System.out.println(""); //Número de produção acadêmica por tipo de produção
+                    System.out.println("Colaboradores: " + Laboratorio.getListaColaboradores().size());
+                    System.out.println("Projetos em elaboração: " + Laboratorio.qtdProjetosElaboracao());
+                    System.out.println("Projetos em andamento: " + Laboratorio.qtdProjetosAndamento());
+                    System.out.println("Projetos concluídos: " + Laboratorio.qtdProjetosConcluidos());
+                    System.out.println("Total de projetos: " + Laboratorio.getListaProjetos().size());
+                    System.out.println("Publicações: " + Laboratorio.getListaPublicacoes().size());
+                    System.out.println("Orientações: " + Laboratorio.getListaOrientacoes().size());
                     break;
 
                 case 8:     //8 - Encerrar
