@@ -15,8 +15,8 @@ public class AppSistema {
 
         Projeto proj;
         String tituloProj;
-        Date dataInicio = null; String dataInicio2;
-        Date dataFim = null; String dataFim2;
+        Date dataInicio = null;
+        Date dataFim = null;
         String agenciaFinanciadora;
         float valorFinanciado;
         String objetivo;
@@ -44,11 +44,9 @@ public class AppSistema {
                     do {
                         try {
                             System.out.print("Digite a data de inicio (DD/MM/AAAA): ");
-                            dataInicio2 = entradaString.nextLine();
-                            dataInicio = sdf.parse(dataInicio2);
+                            dataInicio = sdf.parse(entradaString.nextLine());
                             concluido = true;
                         } catch (ParseException e) {
-                            //e.printStackTrace();
                             System.out.println("A data precisa ser inserida no formato DD/MM/AAAA.");
                         }
                     } while (!concluido);
@@ -57,11 +55,9 @@ public class AppSistema {
                     do {
                         try {
                             System.out.print("Digite a data de término (DD/MM/AAAA): ");
-                            dataFim2 = entradaString.nextLine();
-                            dataFim = sdf.parse(dataFim2);
+                            dataFim = sdf.parse(entradaString.nextLine());
                             concluido = true;
                         } catch (ParseException e) {
-                            //e.printStackTrace();
                             System.out.println("A data precisa ser inserida no formato DD/MM/AAAA.");
                         }
                     } while (!concluido);
@@ -160,14 +156,19 @@ public class AppSistema {
                                         Laboratorio.alterarStatus(tituloProj);
                                         System.out.println("\nProjeto concluído com sucesso.\nStatus atual: Concluído");
                                     }
+                                    break;
 
-                                case 4:     //Voltar
+                                case 4: //4 - Exibir dados do projeto
+                                    System.out.println(Laboratorio.pesquisarProjeto(tituloProj));     //Imprime os dados do projeto
+                                    break;
+
+                                case 5:     //Voltar
                                     break;
 
                                 default:
                                     System.out.println("\nOpção inválida.\n");
                             }
-                        } while (menu != 4);
+                        } while (menu != 5);
                     } else {
                         System.out.println("\nNão existem projetos cadastrados.");
                     }
@@ -529,7 +530,7 @@ public class AppSistema {
         System.out.println("3 - Cadastrar colaborador");
         System.out.println("4 - Consultar colaborador");
         System.out.println("5 - Cadastrar produção acadêmica");
-        System.out.println("6 - Consultar produção acadêmica");
+        System.out.println("6 - Consultar publicação");
         System.out.println("7 - Relatório do laboratório");
         System.out.println("8 - Encerrar");
         System.out.print("=====> Escolha uma opção: ");
@@ -540,7 +541,8 @@ public class AppSistema {
         System.out.println("1 - Alocar participante");
         System.out.println("2 - Iniciar projeto");
         System.out.println("3 - Concluir projeto");
-        System.out.println("4 - Voltar");
+        System.out.println("4 - Exibir dados do projeto");
+        System.out.println("5 - Voltar");
         System.out.print("=====> Escolha uma opção: ");
     }
 

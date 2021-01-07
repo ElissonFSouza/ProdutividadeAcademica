@@ -168,7 +168,7 @@ public class Projeto {
         return "- Título do projeto: " + titulo + "\n- Data de início: " + sdf.format(dataInicio)
                 + "\n- Data de término: " + sdf.format(dataFim) + "\n- Agência financiadora: " + agenciaFinanciadora + "\n- Valor financiado: "
                 + String.format("R$ %.2f", valorFinanciado) + "\n- Objetivo: " + objetivo + "\n- Descrição: " + descricao
-                + "\n- Status: " + status + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes + "\n-Orientações:" + orientacoes;
+                + "\n- Status: " + status + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes + "\n- Orientações:" + orientacoes;
     }
 }
 
