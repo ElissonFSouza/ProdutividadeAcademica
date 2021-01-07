@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Colaborador {
     private String nome;
@@ -55,7 +56,7 @@ public class Colaborador {
 
     public void adicionarProjeto(Projeto proj){
         listaMeusProjetos.add(proj);
-        Collections.sort(listaMeusProjetos);
+        listaMeusProjetos.sort((p1, p2) -> p2.getDataFim().compareTo(p1.getDataFim()));
     }
 
     public void adicionarPublicacao(Publicacao pub){

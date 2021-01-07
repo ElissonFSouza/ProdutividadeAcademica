@@ -1,10 +1,9 @@
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-public class Projeto implements Comparable<Projeto>{
+public class Projeto {
     private String titulo;
     private Date dataInicio;
     private Date dataFim;
@@ -13,8 +12,8 @@ public class Projeto implements Comparable<Projeto>{
     private String objetivo;
     private String descricao;
     private String status;
-    private ArrayList<Colaborador> listaParticipantes = new ArrayList<>(); //Lista dos participantes do projeto
-    private ArrayList<Publicacao> listaPublicacoesAssociadas = new ArrayList<>(); //Lista das publicações associadas ao projeto
+    private final ArrayList<Colaborador> listaParticipantes = new ArrayList<>(); //Lista dos participantes do projeto
+    private final ArrayList<Publicacao> listaPublicacoesAssociadas = new ArrayList<>(); //Lista das publicações associadas ao projeto
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -147,11 +146,6 @@ public class Projeto implements Comparable<Projeto>{
                 + "\n- Data de término: " + sdf.format(dataFim) + "\n- Agência financiadora: " + agenciaFinanciadora + "\n- Valor financiado: "
                 + String.format("R$ %.2f", valorFinanciado) + "\n- Objetivo: " + objetivo + "\n- Descrição: " + descricao
                 + "\n- Status: " + status + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes;
-    }
-
-    @Override
-    public int compareTo(Projeto proj) {
-        return (proj.dataFim.g - this.dataFim);
     }
 }
 

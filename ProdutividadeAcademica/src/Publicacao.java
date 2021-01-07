@@ -28,13 +28,6 @@ public class Publicacao implements Comparable<Publicacao> {
         this.titulo = titulo;
     }
 
-    public String getConferencia() {
-        return conferencia;
-    }
-    public void setConferencia(String conferencia) {
-        this.conferencia = conferencia;
-    }
-
     public int getAnoPublic() {
         return anoPublic;
     }
