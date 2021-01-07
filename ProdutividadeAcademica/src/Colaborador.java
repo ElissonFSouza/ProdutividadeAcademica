@@ -79,7 +79,7 @@ public class Colaborador {
             publicacoes = " Este colaborador não é autor de nenhuma publicação.";
         } else {
             for(Publicacao pub : listaMinhasPublicacoes){
-                publicacoes += "\n" + pub.getTitulo() + " (" + pub.getAnoPublic() + ")";
+                publicacoes += "\n  " + pub.getTitulo() + " (" + pub.getAnoPublic() + ")";
             }
         }
 
@@ -88,7 +88,7 @@ public class Colaborador {
             projetos = " Este colaborador não participa de nenhum projeto.";
         } else {
             for(Projeto proj : listaMeusProjetos){
-                projetos += "\n" + proj.getTitulo() + " (" + proj.getStatus() + ")";
+                projetos += "\n  " + proj.getTitulo() + " (" + proj.getStatus() + ")";
             }
         }
 

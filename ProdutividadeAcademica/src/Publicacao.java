@@ -52,7 +52,7 @@ public class Publicacao implements Comparable<Publicacao> {
             autores = " Não há autores associados à publicação.";
         } else {
             for(Colaborador colab : listaAutores){
-                autores += "\n" + colab.getNome() + " (" + colab.getOcupacao() + ")";
+                autores += "\n  " + colab.getNome() + " (" + colab.getOcupacao() + ")";
             }
         }
 

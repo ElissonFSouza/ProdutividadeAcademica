@@ -138,7 +138,7 @@ public class Projeto {
             participantes = " Não há colaboradores alocados ao projeto.";
         } else {
             for(Colaborador colab : listaParticipantes) {
-                participantes += "\n" + colab.getNome() + " (" + colab.getOcupacao() + ")";
+                participantes += "\n  " + colab.getNome() + " (" + colab.getOcupacao() + ")";
             }
         }
 
@@ -147,19 +147,19 @@ public class Projeto {
             publicacoes = " Não há publicações associadas ao projeto.";
         } else {
             for(Publicacao pub : listaPublicacoesAssociadas) {
-                publicacoes += "\n" + pub.getTitulo() + " (" + pub.getAnoPublic() + ")";
+                publicacoes += "\n  " + pub.getTitulo() + " (" + pub.getAnoPublic() + ")";
             }
         }
 
-        String orientacoes = null;
+        String orientacoes = "";
         if (getListaOrientacoesAssociadas().isEmpty()) {
             orientacoes = " Não há orientações associadas ao projeto.";
         } else {
                 for(Orientacao ori : listaOrientacoesAssociadas) {
                 if (ori.getTituloProj() != null) {
-                    orientacoes += "\n" + ori.getNomeProf() + "/" + ori.getNomeColab() + " (" + ori.getTituloProj() + ")";
+                    orientacoes += "\n  " + ori.getNomeProf() + "/" + ori.getNomeColab() + " (" + ori.getTituloProj() + ")";
                 } else {
-                    orientacoes += "\n" + ori.getNomeProf() + "/" + ori.getNomeColab();
+                    orientacoes += "\n  " + ori.getNomeProf() + "/" + ori.getNomeColab();
                 }
 
             }
@@ -168,7 +168,7 @@ public class Projeto {
         return "- Título do projeto: " + titulo + "\n- Data de início: " + sdf.format(dataInicio)
                 + "\n- Data de término: " + sdf.format(dataFim) + "\n- Agência financiadora: " + agenciaFinanciadora + "\n- Valor financiado: "
                 + String.format("R$ %.2f", valorFinanciado) + "\n- Objetivo: " + objetivo + "\n- Descrição: " + descricao
-                + "\n- Status: " + status + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes;
+                + "\n- Status: " + status + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes + "\n-Orientações:" + orientacoes;
     }
 }
 

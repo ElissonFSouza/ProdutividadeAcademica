@@ -33,15 +33,15 @@ public class Professor extends Colaborador{
 
     @Override
     public String imprimir() {
-        String orientacoes = null;
+        String orientacoes = "";
         if (getListaMinhasOrientacoes().isEmpty()) {
             orientacoes = " Este colaborador não possui orientações.";
         } else {
             for(Orientacao ori : listaMinhasOrientacoes) {
                 if (ori.getTituloProj() != null) {
-                    orientacoes += "\n" + ori.getNomeColab() + " (" + ori.getTituloProj() + ")";
+                    orientacoes += "\n  " + ori.getNomeColab() + " (" + ori.getTituloProj() + ")";
                 } else {
-                    orientacoes += "\n" + ori.getNomeColab();
+                    orientacoes += "\n  " + ori.getNomeColab();
                 }
 
             }
