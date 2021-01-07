@@ -14,6 +14,7 @@ public class Projeto {
     private String status;
     private final ArrayList<Colaborador> listaParticipantes = new ArrayList<>(); //Lista dos participantes do projeto
     private final ArrayList<Publicacao> listaPublicacoesAssociadas = new ArrayList<>(); //Lista das publicações associadas ao projeto
+    private final ArrayList<Orientacao> listaOrientacoesAssociadas = new ArrayList<>(); //Lista das orientações associadas ao projeto
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -23,6 +24,10 @@ public class Projeto {
 
     public ArrayList<Publicacao> getListaPublicacoesAssociadas() {
         return listaPublicacoesAssociadas;
+    }
+
+    public ArrayList<Orientacao> getListaOrientacoesAssociadas() {
+        return listaOrientacoesAssociadas;
     }
 
     public Projeto(){}
@@ -105,6 +110,10 @@ public class Projeto {
         Collections.sort(listaPublicacoesAssociadas);
     }
 
+    public void adicionarOrientacao(Orientacao ori) {
+        listaOrientacoesAssociadas.add(ori);
+    }
+
     public boolean verificarProfessor() { // verifica se existe algum professor entre os participantes
         for(Colaborador colab : listaParticipantes){
             if(colab.getOcupacao().equals("Professor")){
@@ -139,6 +148,20 @@ public class Projeto {
         } else {
             for(Publicacao pub : listaPublicacoesAssociadas) {
                 publicacoes += "\n" + pub.getTitulo() + " (" + pub.getAnoPublic() + ")";
+            }
+        }
+
+        String orientacoes = null;
+        if (getListaOrientacoesAssociadas().isEmpty()) {
+            orientacoes = " Não há orientações associadas ao projeto.";
+        } else {
+                for(Orientacao ori : listaOrientacoesAssociadas) {
+                if (ori.getTituloProj() != null) {
+                    orientacoes += "\n" + ori.getNomeProf() + "/" + ori.getNomeColab() + " (" + ori.getTituloProj() + ")";
+                } else {
+                    orientacoes += "\n" + ori.getNomeProf() + "/" + ori.getNomeColab();
+                }
+
             }
         }
 

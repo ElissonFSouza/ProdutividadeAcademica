@@ -23,6 +23,8 @@ public class AppSistema {
         String descricao;
         String status;
 
+        Orientacao ori;
+
         Publicacao pub;
         String tituloPub;
         String conferencia;
@@ -312,7 +314,8 @@ public class AppSistema {
 
                                                                 if (Laboratorio.verificarProjeto(tituloProj)) {
                                                                     if (Laboratorio.verificarStatusProj(tituloProj, "Em andamento")) {
-                                                                        Laboratorio.criarOrientacao(nomeColab, nomeColab2, tituloProj);
+                                                                        ori = new Orientacao(nomeColab, nomeColab2, tituloProj);
+                                                                        Laboratorio.adicionarOrientacao(ori, nomeColab, tituloProj);
                                                                         System.out.println("\nOrientação cadastrada com sucesso.");
                                                                         break;
                                                                     } else {
@@ -332,7 +335,8 @@ public class AppSistema {
                                                                 }
                                                             } while (menu != 2);
                                                         } else {
-                                                            Laboratorio.criarOrientacao(nomeColab,nomeColab2, null);
+                                                            ori = new Orientacao(nomeColab, nomeColab2, null);
+                                                            Laboratorio.adicionarOrientacao(ori, nomeColab, null);
                                                             System.out.println("\nOrientação cadastrada com sucesso.");
                                                         }
                                                     } else {
@@ -510,6 +514,7 @@ public class AppSistema {
         if (ocupacao.equals("Professor")) {
             prof = new Professor(nomeColab, email, ocupacao);
             Laboratorio.adicionarColaborador(prof);
+            System.out.println(prof.imprimir());
         } else {
             colab = new Colaborador(nomeColab, email, ocupacao);
             Laboratorio.adicionarColaborador(colab);

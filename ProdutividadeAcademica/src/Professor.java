@@ -15,6 +15,11 @@ public class Professor extends Colaborador{
         super(nome, ocupacao, email, listaMeusProjetos, listaMinhasPublicacoes);
     }
 
+    public Professor(String nome, String email, String ocupacao, Orientacao ori) {
+        super(nome, email, ocupacao);
+        this.listaMinhasOrientacoes.add(ori);
+    }
+
     public ArrayList<Orientacao> getListaMinhasOrientacoes() {
         return listaMinhasOrientacoes;
     }
@@ -32,8 +37,13 @@ public class Professor extends Colaborador{
         if (getListaMinhasOrientacoes().isEmpty()) {
             orientacoes = " Este colaborador não possui orientações.";
         } else {
-            for(Orientacao ori : listaMinhasOrientacoes){
-                orientacoes += "\n" + ori.getAlunoOrientado();
+            for(Orientacao ori : listaMinhasOrientacoes) {
+                if (ori.getTituloProj() != null) {
+                    orientacoes += "\n" + ori.getNomeColab() + " (" + ori.getTituloProj() + ")";
+                } else {
+                    orientacoes += "\n" + ori.getNomeColab();
+                }
+
             }
         }
         return super.imprimir() + "\n- Orientações:" + orientacoes;

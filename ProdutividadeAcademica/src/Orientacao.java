@@ -1,41 +1,35 @@
 public class Orientacao {
-    private Professor profOrientador = null;
-    private Colaborador alunoOrientado = null;
-    private Projeto projetoAssociado = null;
+    private String nomeProf;
+    private String nomeColab;
+    private String tituloProj;
 
     public Orientacao() {
-        this.projetoAssociado = new Projeto();
     }
 
-    public Orientacao(Professor profOrientador, Colaborador alunoOrientado) {
-        this.profOrientador = profOrientador;
-        this.alunoOrientado = alunoOrientado;
+    public Orientacao(String nomeProf, String nomeColab, String tituloProj) {
+        this.nomeProf = nomeProf;
+        this.nomeColab = nomeColab;
+        this.tituloProj = tituloProj;
     }
 
-    public Orientacao(Professor profOrientador, Colaborador alunoOrientado, Projeto projetoAssociado) {
-        this.profOrientador = profOrientador;
-        this.alunoOrientado = alunoOrientado;
-        this.projetoAssociado = projetoAssociado;
+    public String getNomeProf() {
+        return nomeProf;
+    }
+    public void setNomeProf(String nomeProf) {
+        this.nomeProf = nomeProf;
     }
 
-    public Professor getProfOrientador() {
-        return profOrientador;
+    public String getNomeColab() {
+        return nomeColab;
     }
-    public void setProfOrientador(Professor profOrientador) {
-        this.profOrientador = profOrientador;
-    }
-
-    public String getAlunoOrientado() {
-        return alunoOrientado.getNome();
-    }
-    public void setAlunoOrientado(Colaborador alunoOrientado) {
-        this.alunoOrientado = alunoOrientado;
+    public void setNomeColab(String nomeColab) {
+        this.nomeColab = nomeColab;
     }
 
-    public Projeto getProjetoAssociado() {
-        return projetoAssociado;
+    public String getTituloProj() {
+        return tituloProj;
     }
-    public void setProjetoAssociado(Projeto projetoAssociado) {
-        this.projetoAssociado = projetoAssociado;
+    public void setTituloProj(String tituloProj) {
+        this.tituloProj = tituloProj;
     }
 }

@@ -32,6 +32,23 @@ public class Laboratorio {
         Collections.sort(listaPublicacoes);
     }
 
+    public static void adicionarOrientacao(Orientacao ori, String nomeProf, String tituloProj) {
+        listaOrientacoes.add(ori);
+        for(Colaborador colab : listaColaboradores) {
+            if (colab.getNome().equalsIgnoreCase(nomeProf)) {
+                ((Professor) colab).adicionarOrientacao(ori);
+                break;
+            }
+        }
+        for (Projeto proj : listaProjetos) {
+            if (proj.getTitulo().equalsIgnoreCase(tituloProj)) {
+                proj.adicionarOrientacao(ori);
+                break;
+            }
+        }
+
+    }
+
     public static void adicionarColaborador(Colaborador colab) {
         listaColaboradores.add(colab);
     }
@@ -246,44 +263,6 @@ public class Laboratorio {
             pub2.setProjetoAssociado(proj2);
             proj2.adicionarPublicacao(pub2);
         }
-    }
-
-    public static void criarOrientacao(String nome, String nome2, String titulo) {
-        Orientacao ori;
-        Projeto proj = null;
-        Professor prof = null;
-        Colaborador colab = null;
-
-        for(Colaborador colabAux : listaColaboradores) {     //Resgata o colaborador professor da lista de colaboradores para adicioná-lo à orientação
-            if (colabAux.getNome().equalsIgnoreCase(nome)) {
-                String nomeProf = colabAux.getNome();
-                String ocupacao = colabAux.getOcupacao();
-                String email = colabAux.getEmail();
-                ArrayList<Projeto> listaMeusProjetos = colabAux.getListaMeusProjetos();
-                ArrayList<Publicacao> listaMinhasPublicacoes = colabAux.getListaMinhasPublicacoes();
-                prof = new Professor(nomeProf, ocupacao, email, listaMeusProjetos, listaMinhasPublicacoes);
-                break;
-            }
-        }
-        for(Colaborador colabAux : listaColaboradores) {     //Resgata o colaborador da lista de colaboradores para adicioná-lo à orientação
-            if (colabAux.getNome().equalsIgnoreCase(nome2)) {
-                colab = colabAux;
-                break;
-            }
-        }
-
-        if (titulo == null) {     //Salva a orientação com os dados dos colaboradores e projeto resgatados
-            ori = new Orientacao(prof, colab);
-        } else {
-            for(Projeto projAux : listaProjetos) {
-                if (projAux.getTitulo().equalsIgnoreCase(titulo)) {     //Resgata o projeto da lista de projetos para adicioná-lo à orientação
-                    proj = projAux;
-                    break;
-                }
-            }
-            ori = new Orientacao(prof, colab, proj);
-        }
-        listaOrientacoes.add(ori);
     }
 
     public static void alterarStatus(String titulo) {
