@@ -166,7 +166,7 @@ public class AppSistema {
                                     break;
 
                                 default:
-                                    System.out.println("\nOpção inválida.\n");
+                                    System.out.println("\nOpção inválida.");
                             }
                         } while (menu != 5);
                     } else {
@@ -305,7 +305,7 @@ public class AppSistema {
                                                             System.out.print("=====> Escolha uma opção: ");
                                                             menu = entrada.nextInt();
                                                             if (menu != 1 & menu != 2) {
-                                                                System.out.println("\nOpção inválida.\n");
+                                                                System.out.println("\nOpção inválida.");
                                                             }
                                                         } while (menu != 1 & menu != 2);
                                                         if (menu == 1) {
@@ -321,6 +321,15 @@ public class AppSistema {
                                                                         break;
                                                                     } else {
                                                                         System.out.println("\nOrientações só podem ser associadas a projetos em andamento.");
+                                                                        do {
+                                                                            System.out.println("1 - Tentar novamente");
+                                                                            System.out.println("2 - Voltar");
+                                                                            System.out.print("=====> Escolha uma opção: ");
+                                                                            menu = entrada.nextInt();
+                                                                            if (menu != 1 & menu != 2) {
+                                                                                System.out.println("\nOpção inválida.\n");
+                                                                            }
+                                                                        } while (menu != 1 & menu != 2);
                                                                     }
                                                                 } else {
                                                                     System.out.println("\nProjeto não encontrado.");
@@ -341,7 +350,7 @@ public class AppSistema {
                                                             System.out.println("\nOrientação cadastrada com sucesso.");
                                                         }
                                                     } else {
-                                                        System.out.println("\nO colaborador não é um professor. Operação cancelada.");
+                                                        System.out.println("\nO colaborador não é um aluno. Operação cancelada.");
                                                     }
                                                     break;
                                                 } else {
@@ -381,7 +390,7 @@ public class AppSistema {
                                 break;
 
                             default:
-                                System.out.println("\nOpção inválida.\n");
+                                System.out.println("\nOpção inválida.");
                         }
                     } while (menu != 3);
                     break;
@@ -491,7 +500,7 @@ public class AppSistema {
                     break;
 
                 default:
-                    System.out.println("\nOpção inválida.\n");
+                    System.out.println("\nOpção inválida.");
             }
         } while (menu != 8);
 
