@@ -66,7 +66,7 @@ public class Colaborador {
     public boolean verificarSituacao() {     //Retorna a quantidade de projetos em andamento que o aluno participa
         int qtd = 0;
         for(Projeto proj : listaMeusProjetos){
-            if (ocupacao.equals("Aluno") && proj.getStatus().equals("Em andamento")) {
+            if (ocupacao.contains("Aluno") && proj.getStatus().equals("Em andamento")) {
                 qtd += 1;
             }
         }
