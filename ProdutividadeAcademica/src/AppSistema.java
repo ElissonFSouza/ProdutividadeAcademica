@@ -1,3 +1,7 @@
+/* Projeto de Software - Sistema de Produtividade Acadêmica
+   Nome do aluno desenvolvedor: Élisson Souza
+*/
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
